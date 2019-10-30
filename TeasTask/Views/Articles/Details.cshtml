@@ -1,0 +1,48 @@
+﻿@model TestTask.Models.Article
+@using TestTask.Models
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h1 class="uk-text-center">@Html.DisplayFor(model => model.Name, new { @class = "uk-heading-divider" })</h1>
+    <hr />
+    <dl class="dl-horizontal">
+        category: @foreach (Category c in Model.Categories)
+                   {
+                       @c.CategoryName
+                   }
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShortDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShortDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

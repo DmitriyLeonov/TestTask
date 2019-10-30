@@ -1,0 +1,39 @@
+﻿@model TestTask.Models.Article
+@using TestTask.Models
+
+@{
+    ViewBag.Title = "Article Details";
+}
+
+<div>
+    <h1 class="uk-text-center">@Html.DisplayFor(model => model.Name, new { @class = "uk-heading-divider" })</h1>
+    <hr />
+    <dl class="dl-horizontal">
+        category: @foreach (Category c in Model.Categories)
+        {
+            @c.CategoryName
+        }
+        @if (Model.ShortDescription != null)
+        {
+            <dd class="uk-text-center uk-text-meta">
+                @Html.DisplayFor(model => model.ShortDescription)
+            </dd>
+        }
+        @if (Model.Image != null)
+        {
+            <dd>
+                @Html.Raw("<img style='width:800px; height:600px;' src=\"data:image/jpeg;base64,"
+                       + Convert.ToBase64String(Model.Image) + "\" />")
+            </dd>
+        }
+
+        <dd class="uk-text-center uk-text-lead">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+    </dl>
+</div>
+<p>
+        @Html.ActionLink("Back to List", "Index")
+</p>
+

@@ -1,0 +1,61 @@
+﻿@using TestTask.Models
+@using TestTask.Helpers
+@model TestTask.Models.ArticleListModel
+@{
+    ViewBag.Title = "Home Page";
+}
+<form method="get" class="uk-position-relative">
+    <div class="form-inline">
+        <label class="control-label">Category: </label>
+        @Html.DropDownList("category", Model.Categories as SelectList,
+                    htmlAttributes: new { @class = "form-control" })
+        <input type="submit" value="Category filter" class="btn btn-default" />
+    </div>
+</form>
+@using (Html.BeginForm("Index", "Home", FormMethod.Get))
+ {
+    <fieldset>
+        @Html.Label("StartDate", "Start Date:")
+        <input class="startdate" id="startdate" name="startdate" type="date" value="">
+        @Html.Label("enddate", "End Date:")
+        <input class="startdate" id="enddate" name="enddate" type="date" value="">
+        <input type="submit" value="Date filter" />
+    </fieldset>
+ }
+<div class="uk-child-width-1-3@s uk-text-center" uk-grid uk-height-match="target: > div > .uk-card">
+    @foreach (var article in Model.Articles)
+    {
+
+        <div>
+            <div class="uk-card uk-card-hover uk-card-body">
+                <div class="uk-card-header">
+                    <h3 class="uk-card-title">@article.Name</h3>
+                </div>
+                @if(article.ShortDescription!=null)
+                 {
+                    <p>@article.ShortDescription</p>
+                 }
+                @if(article.Image!=null)
+                {
+                    <p>
+                        @Html.Raw("<img style='width:100px; height:60px;' src=\"data:image/jpeg;base64,"
+                               + Convert.ToBase64String(article.Image) + "\" />")
+                    </p>
+                }
+                <p>
+                    category: @foreach (Category c in article.Categories)
+                               {
+                                   @c.CategoryName
+                               }
+                </p>
+                <p>
+                    @Html.ActionLink("Show Article", "ArticleDetails", new { id = article.ArticleId })
+                </p>
+            </div>
+        </div>
+    }
+</div>
+<div class="btn-group">
+    @Html.PageLinks(Model.PageInfo, x => Url.Action("Index", new { page = x }))
+</div>
+
